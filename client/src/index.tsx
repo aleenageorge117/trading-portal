@@ -1,8 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+
+import './index.scss';
+import './style.scss';
+
+import "./assets/css/font-awesome.min.css";
+import "./assets/css/font-awesomev5.8.2.css";
+import "./assets/css/font-awesome4.7.0.css";
+import "./assets/css/font-awesome.min.css";
+
 
 ReactDOM.render(
   <React.StrictMode>

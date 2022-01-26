@@ -1,0 +1,106 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap");
+@import "style-variables.scss";
+
+body {
+  background-color: $bodyBackground;
+  color: $fontColor;
+  overflow-x: hidden;
+  font-family: "Open Sans", sans-serif !important;
+}
+
+.row {
+  margin: 0
+}
+
+.searchIcon {
+  background-image: url("./assets/svg/search.svg");
+  background-repeat: no-repeat;
+  background-position: right 14px top 9px;
+  background-position-y: center;
+}
+
+input, .textInput {
+  max-width: 380px;
+  min-width: 280px;
+  border: 1px solid $fontColor;
+  border-radius: 4px;
+  height: 38px;
+  padding: 6px 12px;
+
+  &:focus, &:active {
+    outline: none !important;
+    border: 1px solid $greyOutline;
+  }
+} 
+
+button {
+  &:focus, &:active {
+    outline: none !important;
+  }
+}
+
+.primaryBtn {
+  height: 38px;
+  border: 1px solid $fontColor;
+  border-radius: 4px;
+  min-width: 120px;
+  background-color: $primaryBtn;
+}
+
+.verticalAlignCenter {
+  // display: flex;
+  align-items: center;
+}
+
+.link {
+  color: $links;
+}
+
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ FLOAT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+$floats: (
+  "Left": left,
+  "Right": right
+);
+
+@each $floatKey, $floatValue in $floats {
+  .float#{$floatKey} {
+    float: $floatValue;
+  }
+}
+
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ DISPLAY @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+$displays: (
+  "Flex": flex,
+);
+
+@each $disKey, $disValue in $displays {
+  .display#{$disKey} {
+    display: $disValue;
+  }
+}
+
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ TEXT ALIGN @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+$alignments: (
+  "Right" : right
+);
+
+@each $alignKey, $alignValue in $alignments {
+  .textAlign#{$alignKey} {
+    text-align: $alignValue !important;
+  }
+}
+
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ALIGN ITEM @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+$alignments: (
+  "Center" : center
+);
+
+@each $alignKey, $alignValue in $alignments {
+  .alignItem#{$alignKey} {
+    align-items: $alignValue !important;
+  }
+}
