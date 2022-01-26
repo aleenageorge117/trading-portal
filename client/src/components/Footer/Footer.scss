@@ -5,9 +5,10 @@
     width: 100%;
     color: white;
     bottom: 0px;
-    position: absolute !important;
     padding: 15px 45px !important;
     line-height: 1;
-    height: 45px;
+    min-height: 45px;
+    left: 0px;
+    // position: absolute !important;
     font-size: 12px;
 }

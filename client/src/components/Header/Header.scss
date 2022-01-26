@@ -3,11 +3,12 @@
 .headerContainer {
     // height: 150px;
     background-color: $darkBg;
-    color: white;
+    color: white !important;
     display: flex;
 
     .logoContainer {
         margin: 15px;
+        cursor: pointer;
 
         .mainLogo {
             float: left;

@@ -12,7 +12,9 @@ const SiteLayout = () => {
     return (
         <div>
             <Header />
-            <RouteLists />
+            <div className='routeDisplayArea'>
+                <RouteLists />
+            </div>
             <Footer />
         </div>
     );

@@ -1,0 +1,44 @@
+{
+    "formFields": [
+        {
+            "field": "input",
+            "type": "text",
+            "title": "Trade Name",
+            "name": "tradeName",
+            "placeholder": "Enter Trade Name",
+            "required": true,
+            "maxLength": 80,
+            "className": ""
+        },
+        {
+            "field": "textarea",
+            "type": "",
+            "title": "Description",
+            "name": "tradeDescription",
+            "placeholder": "Describe Trade",
+            "required": true,
+            "maxLength": 250,
+            "className": ""
+        },
+        {
+            "field": "input",
+            "type": "text",
+            "title": "Related Tags",
+            "name": "tags",
+            "placeholder": "Enter related tags for trade",
+            "required": true,
+            "maxLength": 250,
+            "className": ""
+        },
+        {
+            "field": "button",
+            "type": "submit",
+            "title": "Create Trade",
+            "name": "createTrade",
+            "placeholder": "",
+            "required": false,
+            "maxLength": 0,
+            "className": "floatRight"
+        }
+    ]
+}
