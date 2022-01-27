@@ -115,7 +115,7 @@ $displays: (
   }
 }
 
-// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ DISPLAY @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ MARGIN @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 $margin: (
   '0': 0px,
@@ -124,6 +124,26 @@ $margin: (
 @each $marginKey, $marginValue in $margin {
   .margin#{$marginKey} {
     margin: $marginValue;
+  }
+}
+
+$marginLeft: (
+  '30': 30px,
+);
+
+@each $marginKey, $marginValue in $marginLeft {
+  .marginLeft-#{$marginKey} {
+    margin-left: $marginValue;
+  }
+}
+
+$marginRight: (
+  '30': 30px,
+);
+
+@each $marginKey, $marginValue in $marginRight {
+  .marginRight-#{$marginKey} {
+    margin-right: $marginValue;
   }
 }
 
@@ -149,5 +169,46 @@ $alignments: (
 @each $alignKey, $alignValue in $alignments {
   .alignItem#{$alignKey} {
     align-items: $alignValue !important;
+  }
+}
+
+
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ TOOLTIP @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.reactTooltipStyle {
+  max-width: 220px;
+  background: $tooltipBg !important;
+}
+
+.place-bottom {
+  margin-top: -8px !important;
+
+  &::after {
+    border-bottom-color: $tooltipBg !important;
+    border-top-color: $tooltipBg !important;
+  }
+}
+
+.place-top {
+  margin-top: 8px !important;
+
+  &::after {
+    border-top-color: $tooltipBg !important;
+  }
+}
+
+.place-right {
+  margin-right: -8px !important;
+
+  &::after {
+    border-right-color: $tooltipBg !important;
+  }
+}
+
+.place-left {
+  margin-left: -8px !important;
+
+  &::after {
+    border-left-color: $tooltipBg !important;
   }
 }

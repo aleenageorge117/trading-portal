@@ -1,0 +1,18 @@
+@import '../../style-variables.scss';
+
+.homeContainer {
+    // margin: 30px 40px !important;
+    display: contents;
+
+    .homeSection {
+        // padding: 40px;
+    }
+
+    .cardContainer {
+        border: 1px solid $darkBg;
+        border-radius: 4px;
+        margin-top: 35px;
+        min-height: 320px;
+    }
+
+}
