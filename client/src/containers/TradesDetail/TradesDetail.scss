@@ -1,5 +1,89 @@
 @import '../../style-variables.scss';
 
 .detailComponent {
+    padding: 35px 45px !important;
+    margin: 50px 0px 0px 0px;
+
+    .imgContainer {
+        height: 400px;
+        border-radius: 4px;
+        display: flex;
+        padding: 12px 0px;
+
+
+        &:hover {
+            border: 1px solid $darkBg;
+        }
+
+        div {
+            width: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+    }
+
+    .detailSection {
+
+        .authorName {
+            font-size: 20px;
+            display: block;
+        }
+
+        .dividerLine {
+            border-top: 1px solid $darkBg;
+        }
+    }
+
+    .descContainer {
+        text-align: justify;
+        display: flex;
+        padding: 0px 15px;
+    }
+}
+
+
+/* Ratings widget */
+.rate {
+    display: inline-block;
+    border: 0;
+}
+.ratingTxt {
+    line-height: 3.5;
+    font-size: 12px;
+}
+/* Hide radio */
+.rate > input {
+    display: none;
+}
+/* Order correctly by floating highest to the right */
+.rate > label {
+    float: right;
+}
+/* The star of the show */
+.rate > label:before {
+    display: inline-block;
+    font-size: 2rem;
+    padding: .3rem .2rem;
+    margin: 0;
+    cursor: pointer;
+    font-family: FontAwesome;
+    content: "\f005 "; /* full star */
+    margin-top: 5px;
 
 }
+
+/* Half star trick */
+.rate .half:before {
+    content: "\f089 "; /* half star no outline */
+    position: absolute;
+    padding-right: 0;
+}
+/* Click + hover color */
+input:checked ~ label, /* color current and previous stars on checked */
+label:hover, label:hover ~ label { color: #e7db2d;  } /* color previous stars on hover */
+
+/* Hover highlights */
+input:checked + label:hover, input:checked ~ label:hover, /* highlight current and previous stars */
+input:checked ~ label:hover ~ label, /* highlight previous selected stars for new rating */
+label:hover ~ input:checked ~ label /* highlight previous selected stars */ { color: #e7db2d;  } 
