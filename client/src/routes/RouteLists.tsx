@@ -12,7 +12,7 @@ const RouteLists = () => {
             <Route path="/" element={<Navigate replace to="/home" />} />
             <Route path="/home" element={<Home />} />
             <Route path="/trades" element={<Trades />} />
-            <Route path="/trade-detail" element={<TradesDetail />} />
+            <Route path="/trade-detail/:tradeId" element={<TradesDetail />} />
             <Route path="/create" element={<CreateTrade />} />
             <Route path="*" element={<Navigate to="/home" />} />
         </Routes>

@@ -1,18 +1,59 @@
 @import '../../style-variables.scss';
 
 .homeContainer {
-    // margin: 30px 40px !important;
     display: contents;
 
     .homeSection {
-        // padding: 40px;
+        padding: 25px 45px;
+
+        .backBtn {
+            align-items: center;
+            display: flex;
+        }
+    }
+
+    .sectionDivider {
+        width: 70%;
+        text-align: center;
+        border-bottom: 1px solid #000;
+        line-height: 0.1em;
+        margin: 50px 15%;
+        display: inline-block;
+        
+        .sectionTitle { 
+            background: $bodyBackground; 
+            padding:0 10px; 
+        }
+    } 
+
+    .grid1 {
+        border-right: 1px solid $darkBg;
+    }
+
+    .grid2 {
+        border-left: 1px solid $darkBg;
+    }
+
+    .grid1, .grid2 {
+        align-items: center;
+        display: flex;
     }
 
     .cardContainer {
-        border: 1px solid $darkBg;
         border-radius: 4px;
-        margin-top: 35px;
-        min-height: 320px;
-    }
+        min-height: 275px;
+        display: flex;
+        overflow-y: hidden;
+        white-space: nowrap;
+        overflow-x: scroll;
 
+        .disCardContainer {
+            margin: 20px 0px;
+            height: 100%;
+
+            .tradeCardContainer {
+                width: 300px;
+            }
+        }
+    }
 }

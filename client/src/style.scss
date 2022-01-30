@@ -82,6 +82,7 @@ a, a:focus, a:hover {
   float: left;
   font-size: 12px;
   margin-left: 15px;
+  cursor: pointer;
 }
 
 .required {
@@ -119,6 +120,7 @@ $displays: (
 
 $margin: (
   '0': 0px,
+  '20': 20px,
 );
 
 @each $marginKey, $marginValue in $margin {
@@ -126,6 +128,17 @@ $margin: (
     margin: $marginValue;
   }
 }
+
+$marginTB: (
+  '20': 20px,
+);
+
+@each $marginKey, $marginValue in $marginTB {
+  .marginTB-#{$marginKey} {
+    margin: $marginValue 0px;
+  }
+}
+
 
 $marginLeft: (
   '30': 30px,
@@ -211,4 +224,26 @@ $alignments: (
   &::after {
     border-left-color: $tooltipBg !important;
   }
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
