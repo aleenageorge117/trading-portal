@@ -14,13 +14,12 @@ import { Link } from 'react-router-dom';
 
 
 const CreateTrade = () => {
-    console.log(CreateForm)
     return (
         <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 textAlignCenter formArea'>
             <Link to="/" className='displayContents'>
                 <span className='backBtn'>
                     <i className="fa fa-long-arrow-left" aria-hidden="true"></i>&nbsp;
-                    Go Back
+                    Go Back Home
                 </span><br />
             </Link>
             <div className='formContainer'>

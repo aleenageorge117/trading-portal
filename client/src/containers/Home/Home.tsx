@@ -6,6 +6,7 @@ import TradeList from '../../assets/json/tradeList.json';
 
 //COMPONENTS
 import DisplayCards from '../../components/DisplayCards/DisplayCards';
+import Button from '../../components/Form/Button';
 
 // SCSS
 import './Home.scss';
@@ -13,6 +14,27 @@ import './Home.scss';
 
 const Home = () => {
     let tradeList = TradeList;
+    let tradeListButtonProps = {
+        "field": "button",
+        "type": "submit",
+        "title": "View Trades",
+        "name": "viewTrades",
+        "placeholder": "",
+        "required": false,
+        "maxLength": 0,
+        "className": ""
+    };
+
+    let createTradeButtonProps = {
+        "field": "button",
+        "type": "submit",
+        "title": "Create Trade",
+        "name": "createTrades",
+        "placeholder": "",
+        "required": false,
+        "maxLength": 0,
+        "className": "marginLeft-30"
+    };
 
     return (
         <div className='homeContainer row'>
@@ -79,6 +101,11 @@ const Home = () => {
                         </p>
                    </div>
                 </div>
+            </div>
+            <h2 className='sectionDivider'><span className='sectionTitle'>Explore Trades</span></h2>
+            <div className='homeSection col-lg-12 col-sm-12 col-xs-12 col-md-12 row textAlignCenter'>                
+                <Link to='/trades'><Button data={tradeListButtonProps}/></Link>
+                <Link to='/create'><Button data={createTradeButtonProps}/></Link>
             </div>
         </div>
     );

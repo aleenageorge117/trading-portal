@@ -5,6 +5,13 @@
     padding: 30px !important;
     display: inline-table;
 
+    .sectionDivider {
+        border-bottom: 1px solid $darkBg;
+        font-size: 22px;
+        font-weight: 700;
+        width: 90%;
+    }
+
     .tradeList {
         display: grid;
         padding: 25px 15px !important;
@@ -19,6 +26,12 @@
             font-weight: 700;
             font-size: 15px;
         }
+    }
+
+    .verticalLine {
+        border-right: 1px solid $darkBg;
+        height: 20px;
+        margin: 0px 20px;
     }
     
 }

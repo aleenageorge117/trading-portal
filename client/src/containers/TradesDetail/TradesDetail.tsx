@@ -40,7 +40,7 @@ const TradesDetail = () => {
         <div className='detailComponent col-lg-12 col-md-12 col-sm-12 col-xs-12'>
             <div className='col-lg-5 col-md-12 col-sm-12 col-xs-12'>
                 <div className='imgContainer'>
-                    <div style={{backgroundImage:`url(${tradeData.image})`}} ></div>
+                    <div title={tradeData.title} style={{backgroundImage:`url(${tradeData.image})`}} ></div>
                 </div>
             </div>
             <div className='detailSection col-lg-7 col-md-12 col-sm-12 col-xs-12'>
