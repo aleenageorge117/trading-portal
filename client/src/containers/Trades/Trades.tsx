@@ -21,7 +21,7 @@ const Trades = () => {
                 tradeList.trades.map((data: any, key: number) => {
                     return (
                         data.type == 'game' ? 
-                        (<div className='col-lg-3 col-md-4 col-sm-6 col-xs-12 tradeList'>
+                        (<div className='col-lg-3 col-md-4 col-sm-6 col-xs-12 tradeList'  key={key}>
                             <DisplayCards data={data} />
                             <span className='tradeTitle' data-tip data-for={'tradeTitle_' + key} data-class='reactTooltipStyle'>{data.name}</span>
                             <ReactTooltip id={'tradeTitle_' + key} place='bottom' effect='solid'>{data.name}</ReactTooltip>
@@ -35,7 +35,7 @@ const Trades = () => {
                 tradeList.trades.map((data: any, key: number) => {
                     return (
                         data.type == 'song' ? 
-                        (<div className='col-lg-3 col-md-4 col-sm-6 col-xs-12 tradeList'>
+                        (<div className='col-lg-3 col-md-4 col-sm-6 col-xs-12 tradeList'  key={key}>
                             <DisplayCards data={data} />
                             <span className='tradeTitle' data-tip data-for={'tradeTitle_' + key} data-class='reactTooltipStyle'>{data.name}</span>
                             <ReactTooltip id={'tradeTitle_' + key} place='bottom' effect='solid'>{data.name}</ReactTooltip>

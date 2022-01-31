@@ -11,7 +11,6 @@ import Button from '../../components/Form/Button';
 const TradesDetail = () => {
     let urlData: any = useParams();
     let tradeData:any;
-    console.log(urlData.tradeId)
     tradeData = TradeList.trades[parseInt(urlData.tradeId)-1];
 
     let tradeButtonProps = {
@@ -50,7 +49,7 @@ const TradesDetail = () => {
                     <div>
                         <fieldset className="rate">
                             <span className='ratingTxt'>Rating: &nbsp;</span>
-                            <input type="radio" id="rating10" checked name="rating" value="10" /><label htmlFor="rating10" title="5 stars"></label>
+                            <input type="radio" id="rating10" readOnly checked name="rating" value="10" /><label htmlFor="rating10" title="5 stars"></label>
                             <input type="radio" id="rating9" name="rating" value="9" /><label className="half" htmlFor="rating9" title="4 1/2 stars"></label>
                             <input type="radio" id="rating8" name="rating" value="8" /><label htmlFor="rating8" title="4 stars"></label>
                             <input type="radio" id="rating7" name="rating" value="7" /><label className="half" htmlFor="rating7" title="3 1/2 stars"></label>

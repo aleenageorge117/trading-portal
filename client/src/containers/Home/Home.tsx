@@ -56,7 +56,7 @@ const Home = () => {
                             return (
                                 data.type == 'game' && key <= 5 ? 
                                 (
-                                    <div className='margin20 disCardContainer'>
+                                    <div className='margin20 disCardContainer' key={key}>
                                         <DisplayCards data={data}/>
                                     </div>) 
                                 : (null)
@@ -78,7 +78,7 @@ const Home = () => {
                             return (
                                 data.type == 'song' && key <= 5 ? 
                                 (
-                                    <div className='margin20 disCardContainer'>
+                                    <div className='margin20 disCardContainer'  key={key}>
                                         <DisplayCards data={data}/>
                                     </div>) 
                                 : (null)

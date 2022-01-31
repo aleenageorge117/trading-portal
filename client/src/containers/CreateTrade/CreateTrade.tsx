@@ -31,7 +31,7 @@ const CreateTrade = () => {
                     CreateForm !== undefined ?
                     (CreateForm.formFields.map((data: any, key: any) => {
                         return (
-                            <div className={'formField ' + data.className}>
+                            <div className={'formField ' + data.className} key={key}>
                                 {data.field !== "button" ? 
                                     (
                                         <p >{data.title}
