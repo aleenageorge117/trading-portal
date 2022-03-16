@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 //JSON
@@ -13,7 +13,24 @@ import './Home.scss';
 
 
 const Home = () => {
-    let tradeList = TradeList;
+    // let tradeList = TradeList;
+
+    // const [tradeList, setTradeList] : any = useState({});
+    // const [objKey, setObjKey] : any = useState([]);
+
+    // useEffect(() => {
+    //     fetch('/trades')
+    //         .then((res: any) => res.json())
+    //         .then((data: any) => {
+    //             setTradeList(data);
+    //         }); 
+    // }, []);
+
+
+    // useEffect(() => {
+    //     setObjKey(Object.keys(tradeList));           
+    // }, [tradeList]);
+    
     let tradeListButtonProps = {
         "field": "button",
         "type": "submit",
@@ -22,7 +39,7 @@ const Home = () => {
         "placeholder": "",
         "required": false,
         "maxLength": 0,
-        "className": ""
+        "className": "primaryBtn"
     };
 
     let createTradeButtonProps = {
@@ -33,14 +50,14 @@ const Home = () => {
         "placeholder": "",
         "required": false,
         "maxLength": 0,
-        "className": "marginLeft-30"
+        "className": "primaryBtn marginLeft-30"
     };
 
     return (
         <div className='homeContainer row'>
             <h2 className='sectionDivider'><span className='sectionTitle'>Games</span></h2>
             <div className='homeSection col-lg-12 col-sm-12 col-xs-12 col-md-12 row displayFlex'>                
-                <div className=' col-lg-4 col-md-6 col-sm-12 col-xs-12 grid1'>
+                {/* <div className=' col-lg-4 col-md-6 col-sm-12 col-xs-12 grid1'>
                    <div>
                         <h3>
                             Limited Editions Games
@@ -51,15 +68,13 @@ const Home = () => {
                    </div>
                 </div>
                 <div className='cardContainer col-lg-8 col-md-6 col-sm-12 col-xs-12'>
-                    {
-                        tradeList.trades.map((data: any, key: number) => {
+                    { 
+                        tradeList['game'].map((data: any, idY: number) => {
                             return (
-                                data.type == 'game' && key <= 5 ? 
-                                (
-                                    <div className='margin20 disCardContainer' key={key}>
+                                idY % 2 != 0 ? 
+                                    (<div className='margin20 disCardContainer' key={idY}>
                                         <DisplayCards data={data}/>
-                                    </div>) 
-                                : (null)
+                                    </div>) : (null)
                             )
                         })
                     }
@@ -67,12 +82,25 @@ const Home = () => {
                         <Link to='/trades'>
                             Continue &nbsp; <i className="fa fa-long-arrow-right" aria-hidden="true"></i>&nbsp;&nbsp;
                         </Link>
-                    </span>
+                    </span>                                                              
+                </div>  */}
+                <div className='col-lg-6 col-md-6 col-sm-12 col-xs-12 grid1'>
+                    <div>
+                        <h3>
+                            Limited Editions Games
+                        </h3>
+                        <p>
+                            Shop the best curated collection of exclusive and special edition Games.
+                        </p>
+                    </div>
                 </div>
+                <div className='cardContainer col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+
+                </div>  
             </div>
             <h2 className='sectionDivider'><span className='sectionTitle'>Music Vinyls/ CD's</span></h2>
             <div className='homeSection col-lg-12 col-sm-12 col-xs-12 col-md-12 row displayFlex'>
-                <div className='cardContainer col-lg-8 col-md-6 col-sm-12 col-xs-12'>
+                {/* <div className='cardContainer col-lg-8 col-md-6 col-sm-12 col-xs-12'>
                     {
                         tradeList.trades.map((data: any, key: number) => {
                             return (
@@ -84,14 +112,16 @@ const Home = () => {
                                 : (null)
                             )
                         })
-                    }
+                    } 
                     <span className='backBtn'>
                         <Link to='/trades'>
                             Continue &nbsp; <i className="fa fa-long-arrow-right" aria-hidden="true"></i>&nbsp;&nbsp;
                         </Link>
-                    </span>
+                    </span> */}
+                <div className='cardContainer col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+
                 </div>
-                <div className='col-lg-4 col-md-6 col-sm-12 col-xs-12 grid2'>
+                <div className='col-lg-6 col-md-6 col-sm-12 col-xs-12 grid2'>
                    <div>
                         <h3>
                             Experience the Music You Love
@@ -104,8 +134,8 @@ const Home = () => {
             </div>
             <h2 className='sectionDivider'><span className='sectionTitle'>Explore Trades</span></h2>
             <div className='homeSection col-lg-12 col-sm-12 col-xs-12 col-md-12 row textAlignCenter'>                
-                <Link to='/trades'><Button data={tradeListButtonProps}/></Link>
-                <Link to='/create'><Button data={createTradeButtonProps}/></Link>
+                <Link to='/trades'><Button btnClick={(event: any) => {}} data={tradeListButtonProps}/></Link>
+                <Link to='/create'><Button btnClick={(event: any) => {}} data={createTradeButtonProps}/></Link>
             </div>
         </div>
     );

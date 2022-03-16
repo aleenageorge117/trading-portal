@@ -7,8 +7,31 @@
             "name": "tradeName",
             "placeholder": "Enter Trade Name",
             "required": true,
-            "maxLength": 80,
-            "className": ""
+            "maxLength": 120,
+            "className": "",
+            "parenClassName": ""
+        },
+        {
+            "field": "input",
+            "type": "text",
+            "title": "Author Name",
+            "name": "authorName",
+            "placeholder": "Enter Author Name",
+            "required": false,
+            "maxLength": 180,
+            "className": "",
+            "parenClassName": ""
+        },
+        {
+            "field": "input",
+            "type": "text",
+            "title": "Image Link",
+            "name": "imageURL",
+            "placeholder": "Add image URL",
+            "required": false,
+            "maxLength": 1000,
+            "className": "",
+            "parenClassName": ""
         },
         {
             "field": "textarea",
@@ -17,28 +40,31 @@
             "name": "tradeDescription",
             "placeholder": "Describe Trade",
             "required": true,
-            "maxLength": 250,
-            "className": ""
+            "maxLength": 5000,
+            "className": "",
+            "parenClassName": ""
         },
         {
             "field": "input",
             "type": "text",
             "title": "Related Tags",
-            "name": "tags",
+            "name": "tag",
             "placeholder": "Enter related tags for trade",
             "required": true,
             "maxLength": 250,
-            "className": ""
+            "className": "",
+            "parenClassName": ""
         },
         {
             "field": "button",
             "type": "submit",
-            "title": "Create Trade",
+            "title": "Save",
             "name": "createTrade",
             "placeholder": "",
             "required": false,
             "maxLength": 0,
-            "className": "floatRight"
+            "className": "primaryBtn",
+            "parenClassName": "floatRight"
         }
     ]
 }

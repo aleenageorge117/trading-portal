@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactTooltip from "react-tooltip";
-import DisplayCards from '../../components/DisplayCards/DisplayCards';
+import $ from 'jquery';
 
 //JSON
 import TradeList from "../../assets/json/tradeList.json"
@@ -8,43 +8,73 @@ import TradeList from "../../assets/json/tradeList.json"
 // SCSS
 import "./Trades.scss";
 
+//COMPONENT
+import DisplayCards from '../../components/DisplayCards/DisplayCards';
+import ErrorMsg from '../../components/ErrorMsg/ErrorMsg';
+
+const _ = require('lodash');
 
 const Trades = () => {
-    let tradeList = TradeList;
 
-    const [selectedFilter, setSelectedFilter] = useState('all');
+    const [pageContent, setPageContent] : any = useState({});
+    const [objKey, setObjKey] : any = useState([]);
+    const [displayErr, setDisplayErr] = useState(false);
 
+    useEffect(() => {
+        fetch('/trades')
+            .then((res: any) => res.json())
+            .then((data: any) => {
+                setPageContent(data);
+            })
+            .catch((error) => {
+                console.error(error);
+                setDisplayErr(true);
+            });
+    }, []);
+
+    useEffect(() => {
+        setObjKey(Object.keys(pageContent));
+    }, [pageContent]);
+    let counter = 0;
+    
     return (
-        <div className='tradeContainer col-lg-12 col-sm-12 col-xs-12 col-md-12'>
-            <div className='sectionDivider marginLeft-30 col-lg-12'>Games</div>
+        <div>
             {
-                tradeList.trades.map((data: any, key: number) => {
-                    return (
-                        data.type == 'game' ? 
-                        (<div className='col-lg-3 col-md-4 col-sm-6 col-xs-12 tradeList'  key={key}>
-                            <DisplayCards data={data} />
-                            <span className='tradeTitle' data-tip data-for={'tradeTitle_' + key} data-class='reactTooltipStyle'>{data.name}</span>
-                            <ReactTooltip id={'tradeTitle_' + key} place='bottom' effect='solid'>{data.name}</ReactTooltip>
-                        </div>) : (null)
-                    )
-                })
+                !displayErr ?
+                (
+                    <div>
+                        {
+                            objKey.map((key: any, idX: number) => {
+                                if (pageContent[key].length == 0) counter++;
+                                return (
+                                    pageContent[key].length > 0 ? 
+                                        (
+                                            <div className='tradeContainer col-lg-12 col-sm-12 col-xs-12 col-md-12'>
+                                                <div className='sectionDivider marginLeft-30 col-lg-12'>{key}</div>
+                                                {
+                                                    pageContent[key].map((data: any, idY: number) => {
+                                                        return (
+                                                            <div className='col-lg-3 col-md-4 col-sm-6 col-xs-12 tradeList'  key={key}>
+                                                                <DisplayCards data={data} />
+                                                                <span className='tradeTitle' data-tip data-for={'tradeTitle_' + key} data-class='reactTooltipStyle'>{data.tradeName}</span>
+                                                                <ReactTooltip id={'tradeTitle_' + key} place='bottom' effect='solid'>{data.tradeName}</ReactTooltip>
+                                                            </div>
+                                                        );
+                                                    })
+                                                }
+                                                <br />
+                                            </div>
+                                        ) : (null)
+                                );
+                            })
+                        }
+                        {counter == objKey.length ? (<p> No List To display</p>) : (null)}
+                    </div>
+                  
+                ) : (<ErrorMsg message='Error displaying Trades. Please try again later!!'/>)
             }
-            <br />
-            <div className='sectionDivider marginLeft-30 col-lg-12'>Songs</div>
-            {
-                tradeList.trades.map((data: any, key: number) => {
-                    return (
-                        data.type == 'song' ? 
-                        (<div className='col-lg-3 col-md-4 col-sm-6 col-xs-12 tradeList'  key={key}>
-                            <DisplayCards data={data} />
-                            <span className='tradeTitle' data-tip data-for={'tradeTitle_' + key} data-class='reactTooltipStyle'>{data.name}</span>
-                            <ReactTooltip id={'tradeTitle_' + key} place='bottom' effect='solid'>{data.name}</ReactTooltip>
-                        </div>) : (null)
-                    )
-                })
-            }
-            <br />
-        </div >
+            
+        </div>
     );
 }
 

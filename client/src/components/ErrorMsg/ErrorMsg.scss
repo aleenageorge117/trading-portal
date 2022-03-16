@@ -1,0 +1,7 @@
+@import "../../style-variables.scss";
+
+.ErrorMsgContainer {
+    color: $errorRed;
+    font-size: 12px;
+    margin-top: 35px !important;
+}

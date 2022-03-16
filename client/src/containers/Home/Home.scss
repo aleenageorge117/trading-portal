@@ -35,6 +35,7 @@
     }
 
     .grid1, .grid2 {
+        // text-align: ;
         align-items: center;
         display: flex;
     }
@@ -42,10 +43,9 @@
     .cardContainer {
         border-radius: 4px;
         min-height: 275px;
-        display: flex;
-        overflow-y: hidden;
-        white-space: nowrap;
-        overflow-x: scroll;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLT4BVfnecvGB8nqgUDx7fZheBCk_xl4Wxmg&usqp=CAU');
 
         .disCardContainer {
             margin: 20px 0px;

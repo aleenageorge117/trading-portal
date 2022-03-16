@@ -10,6 +10,7 @@
         font-size: 22px;
         font-weight: 700;
         width: 90%;
+        text-transform: capitalize;
     }
 
     .tradeList {
@@ -25,13 +26,12 @@
             white-space: nowrap;
             font-weight: 700;
             font-size: 15px;
+            margin: 0 25px;
         }
     }
 
     .verticalLine {
-        border-right: 1px solid $darkBg;
-        height: 20px;
-        margin: 0px 20px;
+        border-right: 1px solid $darkBg !important;
     }
     
 }

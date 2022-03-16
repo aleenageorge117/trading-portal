@@ -16,7 +16,7 @@ const Header = () => {
         "placeholder": "",
         "required": false,
         "maxLength": 0,
-        "className": ""
+        "className": "primaryBtn"
     };
 
     let tradeListButtonProps = {
@@ -63,7 +63,7 @@ const Header = () => {
                             {
                                 userLoggedIn ? 
                                 (<button className='userIcon btn'>A</button>)
-                                : (<Button data={buttonProps} />)
+                                : (<Button btnClick={(event: any) => {}} data={buttonProps} />)
                             }
                         </div>
                     </div>                    

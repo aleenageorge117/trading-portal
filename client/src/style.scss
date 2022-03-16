@@ -49,10 +49,14 @@ button {
   }
 }
 
-.primaryBtn {
+.btn {
   height: 38px;
-  border: 1px solid $primaryBtnActive;
   border-radius: 4px;
+
+}
+
+.primaryBtn {
+  border: 1px solid $primaryBtnActive;
   min-width: 120px;
   background-color: $primaryBtn;
   color: white !important;
@@ -61,6 +65,38 @@ button {
     color: white !important;
     background-color: $primaryBtnActive;
   }
+}
+
+
+.secondaryBtn {
+  border: 1px solid $secondaryBtnActive;
+  background-color: $secondaryBtn;
+  color: white !important;
+  min-width: 50px;
+
+  &:hover, :focus, :active {
+    color: white !important;
+    background-color: $secondaryBtnActive;
+  }
+}
+
+
+.warningBtn {
+  border: 1px solid $warningBtnActive;
+  background-color: $warningBtn;
+  color: white !important;
+  min-width: 50px;
+
+  &:hover, :focus, :active {
+    color: white !important;
+    background-color: $warningBtnActive;
+  }
+}
+
+.verticalLine {
+  border-right: 1px solid white;
+  height: 20px;
+  margin: 0px 20px;
 }
 
 .verticalAlignCenter {
