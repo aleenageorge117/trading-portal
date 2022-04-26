@@ -97,24 +97,26 @@ const TradeForm = (props: Props) => {
     }
 
     let putTradeData = async (data: object) => {
-        await fetch(`/trades/${urlData.id}`, {
-            method: 'put',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify(data)
-        })
-        .then((response) => response.json())
-        .then((responseJson) => {
-            console.log(responseJson)
-        })
-        .then(() => {
-            // setTimeout(() => {
-                console.log('/trades/'+urlData.id)
-                navigate('/trade-detail/'+urlData.id)                  
-            // }, 3000);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+        if (urlData.id != undefined) {
+            await fetch(`/trades/${urlData.id}`, {
+                method: 'put',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify(data)
+            })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson)
+            })
+            .then(() => {
+                // setTimeout(() => {
+                    console.log('/trades/'+urlData.id)
+                    navigate('/trade-detail/'+urlData.id)                  
+                // }, 3000);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        }
     }
 
     const updateInputData = (el: ChangeEvent<HTMLInputElement>) => {

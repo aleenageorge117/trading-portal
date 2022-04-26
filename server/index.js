@@ -1,32 +1,56 @@
 
 const express = require('express');
 const morgan = require('morgan');
+const mongoose = require('mongoose');
 const methodOverride = require('method-override');
-const tradeRoutes = require('./routes/tradeRoutes');
-var bodyParser = require('body-parser');
-
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
+
+const tradeRoutes = require('./routes/tradeRoutes');
+const userRoutes = require('./routes/userRoutes');
+
+const User = require('./models/userModel');
+
+const app = express();
+
 
 const PORT = process.env.PORT || 3001;
 
-const app = express();
+// let collectionsList =  [];
+
+//connect to database
+mongoose.connect('mongodb://localhost:27017/trade', { useNewUrlParser: true, useUnifiedTopology: true })
+.then(()=>{
+    app.listen(PORT, () => {
+        console.log(`Server listening on ${PORT}`);
+    });
+
+    // mongoose.connection.db.listCollections().toArray(function (err, names) {
+    //     collectionsList = names;
+    // });
+})
+.catch(err=>console.log(err.message));
+
 app.use(bodyParser.json());
+app.use(express.urlencoded({extended: true}));
+app.use(morgan('tiny'));
 app.use(methodOverride('_method'));
-app.use(bodyParser.json());
 app.use(cors());
+app.use(cookieParser());
 
 app.use('/trades', tradeRoutes);
+app.use('/user', userRoutes);
 
-app.get('/', (req, res)=>{
-    res.status(404);
-    res.json({"response":"The requestes resource is Not Available."});
-});
+// app.get('/', (req, res)=>{
+//     res.status(404);
+//     res.json({"response":"The requested resource is Not Available."});
+// });
 
 app.use((err, req, res, next)=>{
     if (!err.status && err.message != undefined) {
         err.status = 500;
         err.message = ('Internal Server Error');
-
     }
     res.status(err.status);
     res.json({'response': 'Server Error: ' + err.message, 'error': true});
@@ -40,6 +64,3 @@ app.use((req, res, next)=>{
     next(err);
 });
 
-app.listen(PORT, () => {
-    console.log(`Server listening on ${PORT}`);
-});

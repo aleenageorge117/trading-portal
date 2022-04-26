@@ -10,9 +10,9 @@ import "./SiteLayout.scss";
 
 const SiteLayout = () => {
     return (
-        <div>
+        <div className=''>
             <Header />
-            <div className='routeDisplayArea'>
+            <div className='routeDisplayArea col-lg-12'>
                 <RouteLists />
             </div>
             <Footer />

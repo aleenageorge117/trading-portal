@@ -1,0 +1,50 @@
+{
+    "formFields": [
+        {
+            "field": "input",
+            "type": "text",
+            "title": "Name",
+            "name": "userName",
+            "placeholder": "Enter Name",
+            "required": true,
+            "maxLength": 420,
+            "minLength": 3,
+            "className": "",
+            "parenClassName": ""
+        },
+        {
+            "field": "input",
+            "type": "text",
+            "title": "Email ID",
+            "name": "emailId",
+            "placeholder": "Enter Email ID",
+            "required": true,
+            "maxLength": 280,
+            "minLength": 6,
+            "className": "",
+            "parenClassName": ""
+        },
+        {
+            "field": "input",
+            "type": "text",
+            "title": "Password",
+            "name": "password",
+            "placeholder": "Enter Password",
+            "required": true,
+            "minLength": 6,
+            "className": "",
+            "parenClassName": ""
+        },
+        {
+            "field": "button",
+            "type": "submit",
+            "title": "Sign Up",
+            "name": "signUpBtn",
+            "placeholder": "",
+            "required": false,
+            "maxLength": 0,
+            "className": "primaryBtn",
+            "parenClassName": "floatRight"
+        }
+    ]
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Router, useNavigate } from 'react-router-dom';
 import Button from '../Form/Button';
 
 // SCSS
@@ -7,11 +7,13 @@ import './Header.scss';
 
 const Header = () => {
 
+    const navigate = useNavigate();
+
     let userLoggedIn: boolean = false;
     let buttonProps = {
         "field": "button",
         "type": "submit",
-        "title": "Sign In",
+        "title": "Log In",
         "name": "signIn",
         "placeholder": "",
         "required": false,
@@ -19,27 +21,10 @@ const Header = () => {
         "className": "primaryBtn"
     };
 
-    let tradeListButtonProps = {
-        "field": "button",
-        "type": "submit",
-        "title": "View Trades",
-        "name": "viewTrades",
-        "placeholder": "",
-        "required": false,
-        "maxLength": 0,
-        "className": ""
-    };
-
-    let createTradeButtonProps = {
-        "field": "button",
-        "type": "submit",
-        "title": "Create Trade",
-        "name": "createTrades",
-        "placeholder": "",
-        "required": false,
-        "maxLength": 0,
-        "className": "marginLeft-30"
-    };
+    let handleBtnClick = (event: any) => {
+        console.log('login')
+        navigate('/login')                  
+    }
 
     return (
         <div>
@@ -63,7 +48,7 @@ const Header = () => {
                             {
                                 userLoggedIn ? 
                                 (<button className='userIcon btn'>A</button>)
-                                : (<Button btnClick={(event: any) => {}} data={buttonProps} />)
+                                : (<Button btnClick={() => handleBtnClick} data={buttonProps} />)
                             }
                         </div>
                     </div>                    

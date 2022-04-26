@@ -19,7 +19,6 @@ router.put('/:id', controller.update)
 // post trade --> /trade
 router.post('/', controller.createTrade)
 
-
 //------------------------ DELETE ------------------------
 // delete trade with id  --> /trades/:id
 router.delete('/:id', controller.delete)

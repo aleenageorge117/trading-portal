@@ -11,10 +11,10 @@ const DisplayCards = (props: any) => {
     const [isShown, setIsShown] = useState(false);
 
     return (
-        <Link to={'/trade-detail/'+props.data.id}>
+        <Link to={'/trade-detail/'+props.data._id}>
             <div className='tradeCardContainer' onMouseEnter={() => {setIsShown(true)}}  onMouseLeave={() => {setIsShown(false)}} style={{backgroundImage:`url(${props.data.imageURL}), url(${defaultImg})`}}>
                 {
-                    isShown ? (<div className='tradeItBtn' id={props.data.id}>Trade it</div>) : null
+                    isShown ? (<div className='tradeItBtn' id={props.data._id}>Trade it</div>) : null
                 }
             </div>
         </Link>

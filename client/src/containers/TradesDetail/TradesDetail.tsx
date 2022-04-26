@@ -85,23 +85,23 @@ const TradesDetail = () => {
     };
 
     let handeClick = (event: any) => {
-        console.log(event.target)
-        if (event.target.id == 'edit') {
-            console.log('navigate')
-            navigate(`/edit/${urlData.tradeId}`)
-        } else {
-            fetch(`/trades/${urlData.tradeId}`, {
-                method: 'delete',
-            })
-            .then((response) => response.json())
-            .then(() => {
-                // setTimeout(() => {
+        if (urlData.tradeId) {
+            if (event.target.id == 'edit') {
+                console.log('navigate')
+                navigate(`/edit/${urlData.tradeId}`)
+            } else {
+                fetch(`/trades/${urlData.tradeId}`, {
+                    method: 'delete',
+                })
+                .then((response) => response.json())
+                .then(() => {
                     navigate('/trades')                  
-                // }, 3000);
-            })
-            .catch((error) => {
-              console.error(error);
-            });        
+                })
+                .catch((error) => {
+                  console.log("----> error");
+                  console.log(error);
+                });        
+            }
         }
     }
     

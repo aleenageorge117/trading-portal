@@ -24,10 +24,13 @@ const Trades = () => {
         fetch('/trades')
             .then((res: any) => res.json())
             .then((data: any) => {
-                setPageContent(data);
+                console.log(data)
+                if (data.error == undefined) 
+                    setPageContent(data);
+                else
+                setDisplayErr(true);
             })
             .catch((error) => {
-                console.error(error);
                 setDisplayErr(true);
             });
     }, []);
@@ -40,12 +43,12 @@ const Trades = () => {
     return (
         <div>
             {
-                !displayErr ?
-                (
+                !displayErr ? (
                     <div>
                         {
                             objKey.map((key: any, idX: number) => {
                                 if (pageContent[key].length == 0) counter++;
+
                                 return (
                                     pageContent[key].length > 0 ? 
                                         (
