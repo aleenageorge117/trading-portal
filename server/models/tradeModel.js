@@ -6,11 +6,10 @@ const tradeSchema = new Schema(
         tradeName : { type: String, required: [true, 'Trade name is a required field.'], 
                                     minLength: [3, 'The content should have atleast 3 characters'],
                                     maxLength: [120, 'the content should have at the max 120 characters'] },
-        authorName : { type: String, maxLength: [180, 'the content should have at the max 180 characters']  },
+        author: {type: Schema.Types.ObjectId, ref: 'User'},
         tradeDescription : { type: String, required: [true, 'Trade description is a required field.'],
                                         maxLength: [5000, 'the content should have at the max 5000 characters'] },
         imageURL : { type: String },
-        userName : { type: String },
         tag : { type: String, required: [true, 'Tag is a required field.'],
                             maxLength: [5000, 'the content should have at the max 5000 characters'] },
         rating : { type: String }
@@ -21,7 +20,7 @@ const tradeSchema = new Schema(
 
 
 
-module.exports = mongoose.model('trades', tradeSchema);
+module.exports = mongoose.model('Trade', tradeSchema);
 
 
 

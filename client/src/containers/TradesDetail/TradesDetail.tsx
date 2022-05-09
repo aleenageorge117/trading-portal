@@ -1,8 +1,10 @@
 import React, { ReactEventHandler, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 // SCSS
 import "./TradesDetail.scss";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 //JSON
 import TradeList from '../../assets/json/tradeList.json';
@@ -18,24 +20,18 @@ const TradesDetail = () => {
 
     const [tradeData, setTradeData]: any = useState({});
     const [displayErr, setDisplayErr] = useState(false);
+    const [inWatchlist, setInWatchlist] = useState({
+        id: null,
+        inWatchlist : false
+    });
+    const [actionBtnFlag, setActionBtnFlag] = useState(false);
 
+    const userId = localStorage.getItem('userId')
+    
     useEffect(() => {
         if(urlData.tradeId != undefined) {
-            fetch(`/trades/${urlData.tradeId}`)
-            .then((res: any) => 
-                res.json()
-            )
-            .then((data: any) => {
-                if(data.error) {
-                    setDisplayErr(true);
-                } else 
-                    setTradeData(data);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-        }
-        
+            getTradeDetail();
+        }        
     }, [urlData.tradeId]);
 
 
@@ -50,15 +46,26 @@ const TradesDetail = () => {
         "className": "primaryBtn marginRight-30"
     };
 
-    let rateButtonProps = {
+    const watchButtonProps = {
         "field": "button",
         "type": "submit",
-        "title": "Rate Item",
-        "name": "rate",
+        "title": "Watch Item",
+        "name": "watch",
         "placeholder": "",
         "required": false,
         "maxLength": 0,
         "className": "primaryBtn marginRight-30"
+    };
+
+    const unWatchButtonProps = {
+        "field": "button",
+        "type": "submit",
+        "title": "Unwatch Item",
+        "name": "watch",
+        "placeholder": "",
+        "required": false,
+        "maxLength": 0,
+        "className": "warningBtn marginRight-30"
     };
 
     let editButtonProps = {
@@ -84,6 +91,26 @@ const TradesDetail = () => {
         "className": "warningBtn marginLeft-30"
     };
 
+    let getTradeDetail = () => {
+        fetch(`/trades/${urlData.tradeId}`)
+            .then((res: any) => 
+                res.json()
+            )
+            .then((data: any) => {
+                if(data.error) {
+                    setDisplayErr(true);
+                } else {
+                    setTradeData(data.trade);
+                    setInWatchlist(data.watchlist)
+                    if ((userId != null || userId != undefined) && data.trade.author._id == userId)
+                        setActionBtnFlag(true)
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
     let handeClick = (event: any) => {
         if (urlData.tradeId) {
             if (event.target.id == 'edit') {
@@ -105,19 +132,130 @@ const TradesDetail = () => {
         }
     }
     
+    let addToWatchList = async () => {
+
+
+        let watchlistItem: object  = {
+            trade: tradeData._id,
+            user: localStorage.getItem('userId')
+        }
+
+
+        await fetch('/watchlist', {
+            method: 'post',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(watchlistItem)
+        })
+        .then((res: any) => res.json())
+        .then((data: any) => {
+            if (data.error == undefined) {
+                showSuccessToast('Trade added to watchlist.');
+                getTradeDetail();            
+            }
+            else {
+                setDisplayErr(true);
+                showErrorToast(data.response)
+
+                if (data.code) {
+                    if (data.code == 11300) {
+                        localStorage.clear(); 
+                        navigate('/')
+                    }
+                }  
+            }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
     
+    const deleteFromWatchlist = () => {
+        fetch(`/watchlist/${inWatchlist['id']}`, {
+            method: 'delete',
+        })
+        .then((response) => response.json())
+        .then((data) => {
+
+            if (data.error == undefined) {
+                showSuccessToast('Trade removed from watchlist.');
+                setInWatchlist({
+                    id: null,
+                    inWatchlist : false
+                })         
+            }
+            else {
+                showErrorToast(data.response)
+
+                if (data.code) {
+                    if (data.code == 11300) {
+                        localStorage.clear(); 
+                        navigate('/')
+                    }
+                }
+                    
+            }
+        })
+        .catch((error) => {
+          console.log("----> error");
+          console.log(error);
+        });  
+    }
+
+    const tradeItem = () => {
+        let reqBody = {
+            tradeRequesting: tradeData._id,
+            tradeRequested: 'tradeReqId',
+            userRequesting: userId,
+            userRequested: tradeData.author._id
+        }
+    }
+
+
+    const showErrorToast = (msg: string) => {
+
+        toast.error(msg, {
+            position: "top-right",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
+    }
+
+    const showSuccessToast = (msg: string) => {
+
+        toast.success(msg, {
+            position: "top-right",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
+    }
+
+
 
     return (
+        <div>
         <div className='detailComponent col-lg-12 col-md-12 col-sm-12 col-xs-12'>
             {
                 !displayErr ?
                 (
                     <div>
                         <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-                            <div className='btnContainer floatRight'>
-                                <Button btnClick={(event: any) => handeClick} data={editButtonProps}/>
-                                <Button btnClick={(event: any) => handeClick} data={deleteButtonProps}/>
-                            </div>    
+                            {
+                                actionBtnFlag ? (
+                                    <div className='btnContainer floatRight'>
+                                        <Button btnClick={(event: any) => handeClick} data={editButtonProps}/>
+                                        <Button btnClick={(event: any) => handeClick} data={deleteButtonProps}/>
+                                    </div> 
+                                ) : (null)
+                            }
+   
                         </div>
                         <div className='col-lg-5 col-md-12 col-sm-12 col-xs-12'>
                             <div className='imgContainer'>
@@ -127,30 +265,28 @@ const TradesDetail = () => {
                         <div className='detailSection col-lg-7 col-md-12 col-sm-12 col-xs-12'>
                             <div className=''>
                                 <h2>{tradeData.tradeName}</h2>
-                                <span className='authorName'>{tradeData.authorName}</span>
+                                {
+                                    tradeData.author !== undefined ? (<span className='authorName'>{tradeData.author.userName}</span>) : null
+                                }
+                                
                                 <div>
-                                    <fieldset className="rate">
-                                        <span className='ratingTxt'>Rating: &nbsp;</span>
-                                        <input type="radio" id="rating10" readOnly checked name="rating" value="10" /><label htmlFor="rating10" title="5 stars"></label>
-                                        <input type="radio" id="rating9" name="rating" value="9" /><label className="half" htmlFor="rating9" title="4 1/2 stars"></label>
-                                        <input type="radio" id="rating8" name="rating" value="8" /><label htmlFor="rating8" title="4 stars"></label>
-                                        <input type="radio" id="rating7" name="rating" value="7" /><label className="half" htmlFor="rating7" title="3 1/2 stars"></label>
-                                        <input type="radio" id="rating6" name="rating" value="6" /><label htmlFor="rating6" title="3 stars"></label>
-                                        <input type="radio" id="rating5" name="rating" value="5" /><label className="half" htmlFor="rating5" title="2 1/2 stars"></label>
-                                        <input type="radio" id="rating4" name="rating" value="4" /><label htmlFor="rating4" title="2 stars"></label>
-                                        <input type="radio" id="rating3" name="rating" value="3" /><label className="half" htmlFor="rating3" title="1 1/2 stars"></label>
-                                        <input type="radio" id="rating2" name="rating" value="2" /><label htmlFor="rating2" title="1 star"></label>
-                                        <input type="radio" id="rating1" name="rating" value="1" /><label className="half" htmlFor="rating1" title="1/2 star"></label>
-                                    </fieldset>
                                     <div className='btnContainer'>
-                                        <Button btnClick={(event: any) => {}} data={rateButtonProps}/>
-                                        <Button btnClick={(event: any) => {}} data={tradeButtonProps}/>
+                                        {
+                                            inWatchlist.inWatchlist ?
+                                            (<Button btnClick={() => deleteFromWatchlist} data={unWatchButtonProps}/>)
+                                            : (<Button btnClick={() => addToWatchList} data={watchButtonProps}/>)
+                                        }
+                                        {
+                                            !actionBtnFlag ? (
+                                                <Button btnClick={() => {}} data={tradeButtonProps}/>
+                                            ) : (null)
+                                        }
                                     </div>
                                 </div>
                             </div>
                             <hr className='dividerLine' />
                         </div>
-                        <div className='descContainer'>
+                        <div className='descContainer'> 
                             About:<br />
                             {tradeData.tradeDescription}
                         </div>
@@ -158,6 +294,9 @@ const TradesDetail = () => {
                 ) : (<ErrorMsg message='Error displaying Trade. Please try again later!!'/>)
             }
         </div>
+       
+        </div>
+
     );
 }
 

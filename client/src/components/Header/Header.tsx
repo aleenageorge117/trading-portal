@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Router, useNavigate } from 'react-router-dom';
 import Button from '../Form/Button';
 
@@ -9,8 +9,9 @@ const Header = () => {
 
     const navigate = useNavigate();
 
-    let userLoggedIn: boolean = false;
-    let buttonProps = {
+    const [userLoggedIn, setUserLoggedIn] = useState(false);
+
+    let loginInButtonProps = {
         "field": "button",
         "type": "submit",
         "title": "Log In",
@@ -21,10 +22,54 @@ const Header = () => {
         "className": "primaryBtn"
     };
 
-    let handleBtnClick = (event: any) => {
-        console.log('login')
+    
+    let loginOutButtonProps = {
+        "field": "button",
+        "type": "submit",
+        "title": "Log Out",
+        "name": "signOut",
+        "placeholder": "",
+        "required": false,
+        "maxLength": 0,
+        "className": "primaryBtn"
+    };
+
+    let handleLogIn = (event: any) => {
         navigate('/login')                  
     }
+
+    let handleLogOut = (event: any) => {
+        fetch('/user')
+            .then((res: any) => res.json())
+            .then((data: any) => {
+                if(!data.error) {
+                    setUserLoggedIn(false);
+                    localStorage.clear(); 
+                    window.location.reload();
+                    navigate('/')
+                }  
+                    //flash msg
+            });
+    }
+
+    useEffect(() => {
+        setTimeout(() => {
+            if(localStorage.getItem('userId')) 
+                setUserLoggedIn(true)
+            else 
+                setUserLoggedIn(false)
+
+        }, 0);
+    }, [])
+    
+    useEffect(() => {
+        setTimeout(() => {
+            if(localStorage.getItem('userId')) 
+                setUserLoggedIn(true)
+            else 
+                setUserLoggedIn(false)
+        }, 0);
+    }, [navigate])
 
     return (
         <div>
@@ -43,12 +88,18 @@ const Header = () => {
                         <div className='col-lg-12 col-sm-12 col-xs-12 col-md-12 row'>                
                             <Link to='/trades'><span>Explore CD's</span></Link> 
                             <span className='verticalLine'></span>
-                            <Link to='/create'><span>Create Trade</span></Link>
-                            <span className='verticalLine'></span>
                             {
                                 userLoggedIn ? 
-                                (<button className='userIcon btn'>A</button>)
-                                : (<Button btnClick={() => handleBtnClick} data={buttonProps} />)
+                                (
+                                    <div className='displayContents'>
+                                        <Link to='/create'><span>Create Trade</span></Link>
+                                        <span className='verticalLine'></span>
+                                        <Link to='/profile'><span>Profile</span></Link>
+                                        <span className='verticalLine'></span>  
+                                        <Button btnClick={() => handleLogOut} data={loginOutButtonProps} />
+                                    </div>
+                                )
+                                : (<Button btnClick={() => handleLogIn} data={loginInButtonProps} />)
                             }
                         </div>
                     </div>                    

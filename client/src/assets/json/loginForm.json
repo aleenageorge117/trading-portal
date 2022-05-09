@@ -14,7 +14,7 @@
         },
         {
             "field": "input",
-            "type": "text",
+            "type": "password",
             "title": "Password",
             "name": "password",
             "placeholder": "Enter Password",

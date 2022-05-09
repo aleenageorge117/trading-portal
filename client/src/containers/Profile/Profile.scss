@@ -1,0 +1,43 @@
+@import '../../style-variables.scss';
+
+.profileContainer {
+    padding: 25px 145px !important;
+
+    span {
+        text-align: justify;
+        display: block;
+    }
+
+    .sectionDivider {
+        border-bottom: 1px solid $darkBg;
+        font-size: 22px;
+        font-weight: 700;
+        width: 90%;
+        text-transform: capitalize;
+    }
+
+    .tradeList {
+        display: grid;
+        padding: 25px 15px !important;
+        cursor: pointer;
+    }
+
+    .tradeTitle, .sectionTitle {
+        padding: 10px 0px;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-weight: 700;
+        font-size: 15px;
+        margin: 0 25px;
+    }
+
+    .verticalLine {
+        border-right: 1px solid $darkBg !important;
+    }
+
+    tr {
+        line-height: 3 !important;
+    }
+}

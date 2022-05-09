@@ -12,8 +12,6 @@ import "./Trades.scss";
 import DisplayCards from '../../components/DisplayCards/DisplayCards';
 import ErrorMsg from '../../components/ErrorMsg/ErrorMsg';
 
-const _ = require('lodash');
-
 const Trades = () => {
 
     const [pageContent, setPageContent] : any = useState({});
@@ -24,7 +22,6 @@ const Trades = () => {
         fetch('/trades')
             .then((res: any) => res.json())
             .then((data: any) => {
-                console.log(data)
                 if (data.error == undefined) 
                     setPageContent(data);
                 else

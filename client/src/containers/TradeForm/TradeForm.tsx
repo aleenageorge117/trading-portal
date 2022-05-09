@@ -28,10 +28,9 @@ const TradeForm = (props: Props) => {
     const [displayErr, setDisplayErr] = useState(false);
     const [formData, setFormData] = useState({
         "tradeName": "",
-        "authorName": "",
+        "author": localStorage.getItem('userId'),
         "tradeDescription": "",
         "imageURL": "",
-        "userName": "",
         "tag": "",
         "rating": 0
     });
@@ -40,10 +39,9 @@ const TradeForm = (props: Props) => {
         if (props.pageTitle === 'create') {
             setFormData({
                 "tradeName": "",
-                "authorName": "",
+                "author": localStorage.getItem('userId'),
                 "tradeDescription": "",
                 "imageURL": "",
-                "userName": "",
                 "tag": "",
                 "rating": 0
             })
@@ -83,13 +81,9 @@ const TradeForm = (props: Props) => {
             body: JSON.stringify(data)
         })
         .then((response) => response.json())
-        .then((responseJson) => {
-          console.log(responseJson)
-        })
-        .then(() => {
-            // setTimeout(() => {
+        .then((res) => {
+            if (!res.error)
                 navigate('/trades')                  
-            // }, 3000);
         })
         .catch((error) => {
           console.error(error);
@@ -125,11 +119,6 @@ const TradeForm = (props: Props) => {
             setFormData({
                 ...formData,
                 tradeName: el.target.value
-            });
-        } else if (el.target.name == 'authorName') {
-            setFormData({
-                ...formData,
-                authorName: el.target.value
             });
         } else if (el.target.name == 'imageURL') {
             setFormData({

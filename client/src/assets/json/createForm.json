@@ -14,17 +14,6 @@
         {
             "field": "input",
             "type": "text",
-            "title": "Author Name",
-            "name": "authorName",
-            "placeholder": "Enter Author Name",
-            "required": false,
-            "maxLength": 180,
-            "className": "",
-            "parenClassName": ""
-        },
-        {
-            "field": "input",
-            "type": "text",
             "title": "Image Link",
             "name": "imageURL",
             "placeholder": "Add image URL",

@@ -1,12 +1,15 @@
 const express = require('express');
 const controller = require('../controllers/userController')
-const { jwtCookieAuth } = require('../middleware/jwtCookieAuth');
+// const { jwtCookieAuth } = require('../middleware/jwtCookieAuth');
 
 const router = express.Router();
 
 //------------------------ GET ------------------------
-// get user -> /user
-router.get('/', controller.getUser)
+// get user -> /user/trades
+router.get('/:id', controller.jwtCookieAuth, controller.getUserTrades)
+
+// logout  user -> /logout
+router.get('/', controller.jwtCookieAuth, controller.logOut)
 
 //------------------------ PUT ------------------------
 
@@ -18,7 +21,7 @@ router.post('/signup', controller.signUp)
 router.post('/login', controller.login)
 
 // checkSessionValid  user -> /checkSessionValid
-// router.post('/session', jwtCookieAuth, controller.sessionIsValid)
+router.post('/session', controller.jwtCookieAuth)
 
 //------------------------ DELETE ------------------------
 

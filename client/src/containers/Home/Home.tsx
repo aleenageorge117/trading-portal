@@ -19,18 +19,23 @@ const Home = () => {
     // const [objKey, setObjKey] : any = useState([]);
 
     // useEffect(() => {
-    //     fetch('/trades')
-    //         .then((res: any) => res.json())
-    //         .then((data: any) => {
-    //             setTradeList(data);
-    //         }); 
+ 
     // }, []);
 
 
     // useEffect(() => {
     //     setObjKey(Object.keys(tradeList));           
     // }, [tradeList]);
-    
+    const session = () => {
+        console.log('/user/session');
+
+        fetch('/user/session')
+        .then((res: any) => res.json())
+        .then((data: any) => {
+            console.log(data);
+        }); 
+    }
+
     let tradeListButtonProps = {
         "field": "button",
         "type": "submit",

@@ -48,12 +48,18 @@ const Login = () => {
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify(formData)
         })
-        .then((response) => { 
-            response.json()
-            // navigate('/trades')                  
+        .then((res: any) => res.json())
+        .then((data: any) => {
+            localStorage.setItem('userId', data.id)
+            localStorage.setItem('userName', data.name)
+
+        })
+        .then(() => {
+            navigate('/profile')
+            window.location.reload();
         })
         .catch((error) => {
-          console.error(error);
+          console.log(error);
         });
     }
 

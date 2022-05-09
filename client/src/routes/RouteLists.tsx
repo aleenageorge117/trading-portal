@@ -9,6 +9,7 @@ import Contact from '../containers/Contact/Contact';
 import About from '../containers/About/About';
 import Login from '../containers/Login/Login';
 import SignUp from '../containers/SignUp/SignUp';
+import Profile from '../containers/Profile/Profile';
 
 const RouteLists = () => {
     return (
@@ -21,6 +22,7 @@ const RouteLists = () => {
             <Route path='/edit/:id' element={<TradeForm pageTitle='edit'/>} />
             <Route path='/contact' element={<Contact />} />
             <Route path='/about' element={<About />} />
+            <Route path='/profile' element={<Profile />} />
             <Route path='/login' element={<Login />} />
             <Route path='/signup' element={<SignUp />} />
             <Route path='*' element={<Navigate to='/home' />} />
