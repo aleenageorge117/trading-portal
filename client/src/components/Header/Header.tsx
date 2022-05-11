@@ -45,10 +45,10 @@ const Header = () => {
                 if(!data.error) {
                     setUserLoggedIn(false);
                     localStorage.clear(); 
-                    window.location.reload();
                     navigate('/')
-                }  
-                    //flash msg
+                    window.location.reload();
+
+                }
             });
     }
 

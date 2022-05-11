@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 //JSON
 import SignUpForm from '../../assets/json/signUpForm.json';
@@ -55,12 +56,45 @@ const SignUp = () => {
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify(formData)
         })
-        .then((response) => { 
-            response.json()
-            navigate('/trades')                  
+        .then((res: any) => res.json())
+        .then((data: any) => {
+            console.log(data)
+            if (data.error == undefined) {
+                showSuccessToast('User Created. Login to view profile.')
+                navigate('/login')
+            }
+            else {
+                showErrorToast(data.response)
+            }
         })
         .catch((error) => {
           console.error(error);
+        });
+    }
+
+    const showSuccessToast = (msg: string) => {
+
+        toast.success(msg, {
+            position: "top-right",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
+    }
+    
+    const showErrorToast = (msg: string) => {
+
+        toast.error(msg, {
+            position: "top-right",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
         });
     }
 

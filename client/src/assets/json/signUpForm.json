@@ -26,12 +26,13 @@
         },
         {
             "field": "input",
-            "type": "text",
+            "type": "password",
             "title": "Password",
             "name": "password",
             "placeholder": "Enter Password",
             "required": true,
             "minLength": 6,
+            "maxLength": 64,
             "className": "",
             "parenClassName": ""
         },

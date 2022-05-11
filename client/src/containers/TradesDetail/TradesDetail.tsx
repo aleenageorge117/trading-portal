@@ -1,10 +1,11 @@
 import React, { ReactEventHandler, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { Modal } from "react-bootstrap";
+import $ from "jquery";
 
 // SCSS
 import "./TradesDetail.scss";
-// import "bootstrap/dist/css/bootstrap.min.css";
 
 //JSON
 import TradeList from '../../assets/json/tradeList.json';
@@ -26,8 +27,13 @@ const TradesDetail = () => {
     });
     const [actionBtnFlag, setActionBtnFlag] = useState(false);
 
+    const [userTrades, setUserTrades]: any = useState({});
+    const [displaysect1Err, setDisplaysect1Err] = useState(false);
+
     const userId = localStorage.getItem('userId')
-    
+
+    const [selectedId, setSelectedId] = useState('');
+  
     useEffect(() => {
         if(urlData.tradeId != undefined) {
             getTradeDetail();
@@ -177,7 +183,7 @@ const TradesDetail = () => {
         .then((data) => {
 
             if (data.error == undefined) {
-                showSuccessToast('Trade removed from watchlist.');
+                showSuccessToast('Trade deleted from watchlist.');
                 setInWatchlist({
                     id: null,
                     inWatchlist : false
@@ -201,13 +207,46 @@ const TradesDetail = () => {
         });  
     }
 
+
     const tradeItem = () => {
+        handleClose();
+
         let reqBody = {
             tradeRequesting: tradeData._id,
-            tradeRequested: 'tradeReqId',
+            tradeRequested: selectedId,
             userRequesting: userId,
             userRequested: tradeData.author._id
         }
+        fetch('/trade-exchange', {
+            method: 'post',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(reqBody)
+        })
+        .then((res: any) => res.json())
+        .then((data: any) => {
+            if (data.error == undefined) {
+                showSuccessToast('Trade requested.');
+                setInWatchlist({
+                    id: null,
+                    inWatchlist : false
+                })         
+            }
+            else {
+                showErrorToast(data.response)
+
+                if (data.code) {
+                    if (data.code == 11300) {
+                        localStorage.clear(); 
+                        navigate('/')
+                    }
+                }
+                    
+            }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+        setSelectedId('')
     }
 
 
@@ -237,11 +276,49 @@ const TradesDetail = () => {
         });
     }
 
+    const handleClose = () => {
+        $('#id01').css('display','none')
+        
+    }
 
+    const handleShow = () => {
+        $('#id01').css('display','block')
+        getUserTrades();
+    }
+
+    const getUserTrades = () => {
+        fetch(`/user/${userId}`)
+            .then((res: any) => res.json())
+            .then((data: any) => {
+                console.log(data)
+
+                if (data.error == undefined) {
+                    setUserTrades(data);
+                }
+                else {
+                    setDisplaysect1Err(true);
+                    showErrorToast(data.response)
+
+                    if (data.code) {
+                        if (data.code == 11300) {
+                            localStorage.clear(); 
+                            navigate('/')
+                        }
+                    }
+                        
+                }
+            })
+            .catch((error) => {              
+                setDisplaysect1Err(true);
+            });
+    }
+
+    const selectTrade = (event: any) => {
+        setSelectedId(event.target.id)
+    }
 
     return (
-        <div>
-        <div className='detailComponent col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+         <div className='detailComponent col-lg-12 col-md-12 col-sm-12 col-xs-12'>
             {
                 !displayErr ?
                 (
@@ -278,7 +355,7 @@ const TradesDetail = () => {
                                         }
                                         {
                                             !actionBtnFlag ? (
-                                                <Button btnClick={() => {}} data={tradeButtonProps}/>
+                                                <Button btnClick={() => handleShow} data={tradeButtonProps}/>
                                             ) : (null)
                                         }
                                     </div>
@@ -293,10 +370,59 @@ const TradesDetail = () => {
                     </div>
                 ) : (<ErrorMsg message='Error displaying Trade. Please try again later!!'/>)
             }
-        </div>
-       
-        </div>
+            <div id="id01" className="w3-modal">
+                <div className="w3-modal-content">
+                    <div className="w3-container">
+                        <h4 className='marginTB-20'>Select Item to trade</h4>
+                        <span onClick={() => $('#id01').css('display', 'none')} className="w3-button w3-display-topright">&times;</span>
+                        <div>
+                            {
+                                userTrades.length > 0 ?
+                                    (
+                                        <table className="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Trade Name</th>
+                                                    <th>Tag</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {
+                                                    userTrades.map((data: any, key: number) => {
+                                                        return (
+                                                            <tr>
+                                                                <td className='tdEllipsis'>
+                                                                    <input id={data._id} name='tradeSelect' className='tradeSelect'
+                                                                        value={data._id} onChange={(event) => { selectTrade(event) }}
+                                                                        type='radio' />
+                                                                    <span className='tradeName'>
+                                                                        {data.tradeName}
+                                                                    </span>
 
+                                                                </td>
+                                                                <td className='tdEllipsis'>{data.tag}</td>
+
+                                                            </tr>
+                                                        )
+                                                    })
+                                                }
+                                            </tbody>
+                                        </table>
+                                    ) : (<span>You have not created any trades yet!</span>)
+                            }
+                        </div>
+                        <div className='marginTB-20 floatRight'>
+                            <button className='btn warningBtn' onClick={() => { handleClose() }}>
+                                Cancel
+                            </button>
+                            <button disabled={selectedId == ''} className='btn primaryBtn marginLeft-30' onClick={() => { tradeItem() }}>
+                                Ok
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }
 

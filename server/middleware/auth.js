@@ -1,42 +1,30 @@
-const Tournament = require('../models/story');
 
 //Check if user is a guest
 exports.isGuest = (req, res, next)=>{
-    if(!req.session.user){
+    const token = req.cookies.token;
+
+    if(!token) {
         return next();
     }
-    else{
-        req.flash('error', 'you are logged in already');
-        return res.redirect('/users/profile');
+    else {
+        let error = new Error('You are already logged in!')
+        error.status = 400;
+        return next(error)
     }
 };
 
 //Check if user is a authenticated
 exports.isLoggedIn = (req, res, next)=>{
-    if(req.session.user){
+    const token = req.cookies.token;
+
+    if(token) {
         return next();
     }
-    else{
-        req.flash('error', 'you need to log in first');
-        return res.redirect('/users/login');
+    else {
+        res.clearCookie('token')
+        let error = new Error('Session Expired! You are required to Login')
+        error.code = 11300;
+        error.status = 440;
+        return next(error)
     }
-};
-
-//Check if user is author of the tournament
-exports.isAuthor = (req, res, next)=>{
-    let id = req.params.id;
-    Tournament.findById(id)
-    .then(tournament=>{
-        if(tournament){
-            if(tournament.creator == req.session.user){
-                console.log("success");
-                next();
-            } else{
-                let err = new Error('Unauthorized to access the resource');
-                err.status = 401;
-                return next(err);
-            }
-        }
-    })
-
 };

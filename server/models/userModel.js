@@ -4,7 +4,8 @@ const bcrypt = require('bcrypt');
 
 const userSchema = new Schema({
     userName : { type: String, required: [true, 'Name is a required field.']},
-    emailId : { type: String, required: [true, 'Email ID is a required field.'], unique: true},
+    emailId : { type: String, required: [true, 'Email ID is a required field.'], 
+                unique: [true, 'this email address has been used']},
     password : { type: String, required: [true, 'Password is a required field.']}
 });
 

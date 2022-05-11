@@ -20,6 +20,7 @@
             "placeholder": "Enter Password",
             "required": true,
             "minLength": 6,
+            "maxLength": 64,
             "className": "",
             "parenClassName": ""
         },

@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken');
 
 exports.signUp = (req, res, next) => {
     let user = new model(req.body);
+    if(user.emailId)
+        user.emailId = user.emailId.toLowerCase();    
     user.save()
     .then(() => {
         res.status = 200;
@@ -13,29 +15,29 @@ exports.signUp = (req, res, next) => {
     })
     .catch(err => {
         if(err.name === 'ValidationError' ) {
-            let err = new Error(err.message)
-            err.status = 404;
+            let error = new Error('Missing information')
+            error.status = 400;
+            return next(error)
         }
-
         if(err.code === 11000) {
-            let err = new Error('Email has been used')
-            err.status = 404;
+            let error = new Error('Email has been used.')
+            error.status = 400;
+            return next(error)
         }
         
-        next(err);
     });
 }
 
 exports.login = (req, res, next) => {
-    console.log('---> controller login')
     let emailId = req.body.emailId;
+    if (emailId)
+        emailId = emailId.toLowerCase();
+
     let password = req.body.password;
 
     model.findOne({ emailId: emailId })
     .then(user => {
-        console.log('user')
         
-        console.log(user)
         if (!user) {
             res.status(404).send('Wrong email address');
         } else {
@@ -49,7 +51,9 @@ exports.login = (req, res, next) => {
                         res.status(200)
                         res.json({'token':token, 'id': user._id, 'name': user.userName, });
                     } else {
-                        res.status(401).send('Invalid Password');
+                        let error = new Error('Invalid Password')
+                        error.status = 400;
+                        return next(error)
                     }
                 });
         }     
@@ -58,7 +62,6 @@ exports.login = (req, res, next) => {
 };
 
 exports.logOut = (req, res, next) => {
-    console.log('------------> logout')
     try {
         res.clearCookie('token')
         res.status = 200;
@@ -72,14 +75,12 @@ exports.logOut = (req, res, next) => {
 
 exports.isLoggedIn = (req, res, next) => {
     const token = req.cookies.token;
-    console.log('------>token')
     if (req.cookies.token != undefined) {
         try {
             const user = jwt.verify(token, 'Aleena');
             return next();
         } catch(err) {
             res.clearCookie('token')
-            console.log('------>token'+ token)
 
             let error = new Error('Session Expired! You are required to Login')
             error.status = 440;
@@ -88,35 +89,6 @@ exports.isLoggedIn = (req, res, next) => {
     } else {
         let error = new Error('Log In first!')
         error.status = 400;
-        return next(error)
-    }
-}
-
-exports.jwtCookieAuth = (req, res, next) => {
-    const token = req.cookies.token;
-    if (token != undefined) {
-        try {
-            const user = jwt.verify(token, 'Aleena');
-            return next();
-        } catch(err) {
-            res.clearCookie('token')
-            let error = new Error('Session Expired! You are required to Login')
-            console.log('----->error')
-
-            error.code = 11300;
-            error.status = 440;
-            console.log(error)
-
-            return next(error)
-        }
-    } else {
-        let error = new Error('Log In first!')
-        console.log('----->error')
-
-        error.code = 11300;
-        error.status = 440;
-        console.log(error)
-
         return next(error)
     }
 }

@@ -8,6 +8,7 @@
             "placeholder": "Enter Trade Name",
             "required": true,
             "maxLength": 120,
+            "minLength": 3,
             "className": "",
             "parenClassName": ""
         },

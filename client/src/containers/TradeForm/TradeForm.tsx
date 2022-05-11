@@ -15,6 +15,7 @@ import './TradeForm.scss';
 import CreateForm from '../../assets/json/createForm.json'
 import { Link } from 'react-router-dom';
 import ErrorMsg from '../../components/ErrorMsg/ErrorMsg';
+import { toast } from 'react-toastify';
 
 interface Props {
     pageTitle: string
@@ -50,15 +51,23 @@ const TradeForm = (props: Props) => {
         else {
             setFormTitle('Edit Trade');
         }
-        console.log(urlData.id)
         if(urlData.id != undefined) {
             fetch(`/trades/${urlData.id}`)
             .then((res: any) => res.json())
             .then((data: any) => {
-                if(data.error) {
+                if(data.error == undefined) {
+                    console.log(data)
+                    setFormData(data.trade);
+                } else {
+                    showErrorToast(data.response)
+                    if (data.code) {
+                        if (data.code == 11300) {
+                            localStorage.clear(); 
+                            navigate('/')
+                        }
+                    }
                     setDisplayErr(true);
-                } else 
-                    setFormData(data);
+                }
             });
         }
         
@@ -81,9 +90,18 @@ const TradeForm = (props: Props) => {
             body: JSON.stringify(data)
         })
         .then((response) => response.json())
-        .then((res) => {
-            if (!res.error)
+        .then((data) => {
+            if(data.error == undefined) {
                 navigate('/trades')                  
+            } else {
+                showErrorToast(data.response)
+                if (data.code) {
+                    if (data.code == 11300) {
+                        localStorage.clear(); 
+                        navigate('/')
+                    }
+                }
+            }
         })
         .catch((error) => {
           console.error(error);
@@ -98,14 +116,18 @@ const TradeForm = (props: Props) => {
                 body: JSON.stringify(data)
             })
             .then((response) => response.json())
-            .then((responseJson) => {
-                console.log(responseJson)
-            })
-            .then(() => {
-                // setTimeout(() => {
-                    console.log('/trades/'+urlData.id)
-                    navigate('/trade-detail/'+urlData.id)                  
-                // }, 3000);
+            .then((data) => {
+                if(data.error == undefined) {
+                    navigate('/trade-detail/'+urlData.id)       
+                } else {
+                    showErrorToast(data.response)
+                    if (data.code) {
+                        if (data.code == 11300) {
+                            localStorage.clear(); 
+                            navigate('/')
+                        }
+                    }
+                }
             })
             .catch((error) => {
               console.error(error);
@@ -136,6 +158,19 @@ const TradeForm = (props: Props) => {
                 tag: el.target.value
             });
         }
+    }
+
+    const showErrorToast = (msg: string) => {
+
+        toast.error(msg, {
+            position: "top-right",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
     }
 
     return (

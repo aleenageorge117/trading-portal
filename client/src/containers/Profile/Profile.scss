@@ -39,5 +39,15 @@
 
     tr {
         line-height: 3 !important;
+    }    
+    
+    hr {
+        width: 75%;
+        border: 0;
+        border-top: 1px solid $greyOutline;
+        text-align: center;
+        align-items: center;
+        display: block;
+        margin: 20px auto 5px;
     }
 }

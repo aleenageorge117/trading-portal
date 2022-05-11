@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 //JSON
 import LoginForm from '../../assets/json/loginForm.json';
@@ -50,19 +51,36 @@ const Login = () => {
         })
         .then((res: any) => res.json())
         .then((data: any) => {
-            localStorage.setItem('userId', data.id)
-            localStorage.setItem('userName', data.name)
-
-        })
-        .then(() => {
-            navigate('/profile')
-            window.location.reload();
+            console.log(data)
+            if (data.error == undefined) {
+                localStorage.setItem('userId', data.id)
+                localStorage.setItem('userName', data.name)
+                navigate('/profile')
+                window.location.reload();
+            }
+            else {
+                showErrorToast(data.response)
+            }
         })
         .catch((error) => {
           console.log(error);
         });
     }
 
+       
+    const showErrorToast = (msg: string) => {
+
+        toast.error(msg, {
+            position: "top-right",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
+    }
+    
     return (
         <div className='loginContainer col-lg-12 col-md-12 col-sm-12'>
             <div className='loginSection formContainer'>

@@ -1,5 +1,6 @@
 const model = require('../models/tradeModel');
 const watchlistModel = require('../models/watchlistModel');
+const tradeExchangeModel = require('../models/tradeExchangeModel');
 const mongoose = require('mongoose');
 const { stringify } = require('querystring');
 
@@ -22,7 +23,6 @@ exports.tradeList = (req, res, next) => {
         else {
             let err = new Error('Cannot get Trade list')
             err.status = 404;
-            // next(err);
         }
     })
     .catch(err => next(err));
@@ -31,11 +31,6 @@ exports.tradeList = (req, res, next) => {
 exports.trade = (req, res, next) => {
 
     let id = req.params.id;
-    if(!id.match(/^[0-9a-fA-F]{24}$/)) {
-        let err = new Error('Invalid connection id');
-        err.status = 400;
-        return next(err);
-    }
 
     Promise.all([model.findById(id).populate('author'), watchlistModel.find({'trade': id})])    
     .then(result => {
@@ -71,19 +66,16 @@ exports.createTrade = (req, res, next) => {
     .catch(err => {
         if(err.name === 'ValidationError') {
             let error = new Error('Error creating trade.')
-            error.status = 440;
+            error.status = 400;
+            return next(error)
+
         }
-        return next(error)
     });
     
 }
 
 exports.update = (req, res, next) => {
-    if(!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
-        let err = new Error('Invalid connection id');
-        err.status = 400;
-        return next(err);
-    }
+
     model.findByIdAndUpdate(req.params.id, req.body, {useFindAndModify: false, runValidators: true})
     .then(status=>{
         if (status) {
@@ -98,11 +90,7 @@ exports.update = (req, res, next) => {
 }
 
 exports.delete = (req, res, next) => {
-    if(!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
-        let err = new Error('Invalid connection id');
-        err.status = 400;
-        return next(err);
-    }
+
     model.findByIdAndDelete(req.params.id, {useFindAndModify: false})
     .then(status => {
         if(status) {

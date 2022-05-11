@@ -40,50 +40,20 @@
         display: flex;
         padding: 0px 15px;
     }
-}
 
+    .tradeSelect {
+        height: 12px;
+        margin-top: 0px;
+        cursor: pointer;
+    }
 
-/* Ratings widget */
-.rate {
-    display: inline-block;
-    border: 0;
+    .tradeName {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 211px;
+        display: inline-block;
+        line-height: 1;
+        margin: 0px 0px 0px 10px;
+    }
 }
-.ratingTxt {
-    line-height: 3.5;
-    font-size: 12px;
-}
-/* Hide radio */
-.rate > input {
-    display: none;
-}
-/* Order correctly by floating highest to the right */
-.rate > label {
-    float: right;
-}
-/* The star of the show */
-.rate > label:before {
-    display: inline-block;
-    font-size: 2rem;
-    padding: .3rem .2rem;
-    margin: 0;
-    cursor: pointer;
-    font-family: FontAwesome;
-    content: "\f005 "; /* full star */
-    margin-top: 5px;
-
-}
-
-/* Half star trick */
-.rate .half:before {
-    content: "\f089 "; /* half star no outline */
-    position: absolute;
-    padding-right: 0;
-}
-/* Click + hover color */
-input:checked ~ label, /* color current and previous stars on checked */
-label:hover, label:hover ~ label { color: #e7db2d;  } /* color previous stars on hover */
-
-/* Hover highlights */
-input:checked + label:hover, input:checked ~ label:hover, /* highlight current and previous stars */
-input:checked ~ label:hover ~ label, /* highlight previous selected stars for new rating */
-label:hover ~ input:checked ~ label /* highlight previous selected stars */ { color: #e7db2d;  } 

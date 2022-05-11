@@ -1,27 +1,30 @@
 const express = require('express');
 const controller = require('../controllers/userController')
-// const { jwtCookieAuth } = require('../middleware/jwtCookieAuth');
+const { jwtCookieAuth } = require('../middleware/jwtCookieAuth');
+const { loginLimiter } = require('../middleware/rateLimiter')
+const { isLoggedIn, isGuest } = require('../middleware/auth');
+const { validateResult, validateLogin, validateSignUp } = require('../middleware/validator');
 
 const router = express.Router();
 
 //------------------------ GET ------------------------
 // get user -> /user/trades
-router.get('/:id', controller.jwtCookieAuth, controller.getUserTrades)
+router.get('/:id', isLoggedIn, jwtCookieAuth, controller.getUserTrades)
 
 // logout  user -> /logout
-router.get('/', controller.jwtCookieAuth, controller.logOut)
+router.get('/', isLoggedIn, jwtCookieAuth, controller.logOut)
 
 //------------------------ PUT ------------------------
 
 //------------------------ POST ------------------------
 // signup  user -> /signup
-router.post('/signup', controller.signUp)
+router.post('/signup', validateSignUp, validateResult, controller.signUp)
 
 // login  user -> /login
-router.post('/login', controller.login)
+router.post('/login', isGuest, loginLimiter, validateLogin, validateResult, controller.login)
 
 // checkSessionValid  user -> /checkSessionValid
-router.post('/session', controller.jwtCookieAuth)
+router.post('/session', isLoggedIn, jwtCookieAuth)
 
 //------------------------ DELETE ------------------------
 
